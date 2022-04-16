@@ -1,40 +1,44 @@
 <script setup>
 import { ref } from 'vue'
 
-defineProps({
-  msg: String
-})
+import { sayHello } from '../api/hello'
 
 const count = ref(0)
+const message = ref("鲜花音乐盒后台")
+
+const hi = () => {
+  sayHello().then(resp => {
+    message.value = resp.data
+  })
+
+  // get('https://cloud-music-1776550-1310758610.ap-shanghai.run.tcloudbase.com/sayHello').then(res => {
+  //   message.value = res.data
+  // })
+}
+
 </script>
 
 <template>
-  <h1>{{ msg }}</h1>
+  <h1>{{ message }}</h1>
 
-  <p>
-    Recommended IDE setup:
-    <a href="https://code.visualstudio.com/" target="_blank">VSCode</a>
-    +
-    <a href="https://github.com/johnsoncodehk/volar" target="_blank">Volar</a>
-  </p>
+  <div class="container">
+    <q-btn color="primary" @click="count++">点击次数{{ count }}</q-btn>
+    <br/><br/>
+    <q-btn color="primary" @click="hi">请求接口</q-btn>
+  </div>
+  
 
-  <p>
-    <a href="https://vitejs.dev/guide/features.html" target="_blank">
-      Vite Documentation
-    </a>
-    |
-    <a href="https://v3.vuejs.org/" target="_blank">Vue 3 Documentation</a>
-  </p>
-
-  <button type="button" @click="count++">count is: {{ count }}</button>
-  <p>
-    Edit
-    <code>components/HelloWorld.vue</code> to test hot module replacement.
-  </p>
 </template>
 
 <style scoped>
 a {
   color: #42b983;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  background: #42b983;
+  display: inline;
 }
 </style>
